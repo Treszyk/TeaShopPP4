@@ -2,6 +2,7 @@ using AutoMapper;
 using CartService.Application.DTOs;
 using CartService.Domain.Entities;
 using CartService.Domain.Interfaces;
+using System.Linq;
 
 namespace CartService.Application.Services;
 
@@ -14,6 +15,12 @@ public class CartService : ICartService
     {
         _repo = repo;
         _mapper = mapper;
+    }
+
+    public async Task<List<CartDto>> GetAllAsync(CancellationToken ct = default)
+    {
+        var carts = await _repo.GetAllAsync();
+        return carts.Select(c => _mapper.Map<CartDto>(c)).ToList();
     }
 
     public async Task<CartDto?> GetAsync(Guid userId, CancellationToken ct = default)
