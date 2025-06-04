@@ -4,15 +4,20 @@ using CartService.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CartService.API.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-[Authorize]
-public class CartController(IMediator mediator) : ControllerBase
+[Route("admin/carts")]
+[Authorize(Roles = "Admin")]
+public class AdminCartController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
+
+    [HttpGet]
+    public async Task<ActionResult<List<CartDto>>> GetAll()
+        => Ok(await _mediator.Send(new GetAllCartsQuery()));
 
     [HttpGet("{userId}")]
     public async Task<ActionResult<CartDto?>> Get(Guid userId)
