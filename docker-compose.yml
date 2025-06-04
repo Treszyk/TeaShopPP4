@@ -84,6 +84,7 @@ services:
       ConnectionStrings__Redis: "redis"
       Kafka__BootstrapServers: "kafka:9092"
       Kafka__ProductCacheTopic: "product-cache"
+      JWT_PUBLIC_KEY: "${JWT_PUBLIC_KEY}"
     expose:
       - "8080"
     depends_on:
