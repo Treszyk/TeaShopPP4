@@ -18,6 +18,9 @@ public class CartController(IMediator mediator) : ControllerBase
 
     private Guid CurrentUserId() => Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
+    [HttpGet]
+    public IActionResult Get() => Ok("CartService is healthy.");
+
     [HttpGet("cached")]
     public IActionResult GetCachedProducts([FromServices] IProductCache cache)
     {
@@ -25,8 +28,8 @@ public class CartController(IMediator mediator) : ControllerBase
         return Ok(cachedItems);
     }
 
-    [HttpGet]
-    public async Task<ActionResult<CartDto?>> Get()
+    [HttpGet("mycart")]
+    public async Task<ActionResult<CartDto?>> GetMyCart()
         => Ok(await _mediator.Send(new GetCartQuery(CurrentUserId())));
 
     [HttpPost("item")]
@@ -43,7 +46,7 @@ public class CartController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete]
+    [HttpDelete("mycart")]
     public async Task<IActionResult> Clear()
     {
         await _mediator.Send(new ClearCartCommand(CurrentUserId()));

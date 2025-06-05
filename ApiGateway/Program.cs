@@ -71,7 +71,7 @@ namespace ApiGateway
 
             foreach (var service in servicesSection.GetChildren())
             {
-                //Debug.Print(service.Key + " key from the foreach loop");
+                Debug.Print(service.Key + " key from the foreach loop " + service.Value);
                 var name = service.Key;
                 var address = service.Value;
                 if (!string.IsNullOrWhiteSpace(address))

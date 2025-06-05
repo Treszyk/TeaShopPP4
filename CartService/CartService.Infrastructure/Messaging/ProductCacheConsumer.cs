@@ -29,7 +29,7 @@ public class ProductCacheConsumer : BackgroundService
         var config = new ConsumerConfig
         {
             GroupId = "cartservice",
-            BootstrapServers = _configuration["Kafka:BootstrapServers"] ?? "kafka:9092",
+            BootstrapServers = _configuration["Kafka:BootstrapServers"] ?? "teashop-kafka:9092",
             AutoOffsetReset = AutoOffsetReset.Earliest,
             EnableAutoCommit = true
         };
